@@ -1,3 +1,4 @@
+
 /*Rodrigo Solana Chao
 ITESM CSF Ejercicio3.
 gcc -w -g nombrerarchivo
