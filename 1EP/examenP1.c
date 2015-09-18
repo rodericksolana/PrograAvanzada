@@ -196,6 +196,12 @@ else
 		{
 			free(menu3);
 		salir(mod, p,ed,tor,nav);
+free(p);
+free(tor);
+free(ed);
+free(nav);
+free(mod);
+
 		exit(0);
 
 		}//Cierre de SALIR
