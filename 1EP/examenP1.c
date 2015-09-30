@@ -230,7 +230,7 @@ void agregaP(Persona *p, int c)
 	scanf("%s",(p+c)->fechaIngreso);
 
 	printf("Dame el salario: ");
-	scanf("%f",&(p+c)->salario);
+	scanf("%f",(&(p+c)->salario));
 	(p+c)->puesto = malloc(sizeof(char)*10);
 	printf("Dame el puesto: ");
 	scanf("%s",(p+c)->puesto);	
@@ -250,7 +250,7 @@ void editarP(Persona *p, int c)
 	printf("Dame la fecha de Ingreso en este formato ejemplo 1989-02-04 :  ");
 	scanf("%s",(p+c)->fechaIngreso);
 	printf("Dame el salario: ");
-	scanf("%f",&(p+c)->salario);
+	scanf("%f",(&(p+c)->salario));
 	printf("Dame el puesto: ");
 	scanf("%s",(p+c)->puesto);	
 
