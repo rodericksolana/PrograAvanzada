@@ -12,8 +12,8 @@
 int main(int argc, const char * argv[]) {
     
     struct sockaddr_in direccion;
-    char buffer[1000];
-    
+    //char buffer[1000];
+    int buffer[1000];
     int cliente;
     
     int leidos, escritos;

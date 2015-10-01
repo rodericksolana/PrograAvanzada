@@ -15,7 +15,8 @@ srand((int) time(NULL));
 
     
     struct sockaddr_in direccion;
-    char buffer[1000];
+    //char buffer[1000];
+int buffer[1000];
     
     int servidor, cliente;
     
@@ -53,10 +54,13 @@ int temp=0;
         // Leer de socket y escribir en pantalla
         while (leidos = read(cliente, &buffer, sizeof(buffer))) {
 for(i=0; i<10;++i)
+{
 	temp=rand() % 100;
-         
-           // write(fileno(stdout), &buffer, leidos);
-	write(fileno(stdout), &buffer, leidos);
+buffer[i]=temp;
+write(fileno(stdout), &buffer, leidos);
+}
+        
+            //write(fileno(stdout), &buffer, leidos);
             
             leidos = read(fileno(stdin), &buffer, sizeof(buffer));
             write(cliente, &buffer, leidos);
