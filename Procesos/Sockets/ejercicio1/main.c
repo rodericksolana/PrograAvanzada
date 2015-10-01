@@ -1,10 +1,3 @@
-//
-//  main.c
-//  sockets
-//
-//  Created by Vicente Cubells Nonell on 14/09/15.
-//  Copyright (c) 2015 Vicente Cubells Nonell. All rights reserved.
-//
 
 
 #include <stdio.h>
@@ -18,6 +11,7 @@
 
 int main(int argc, const char * argv[]) {
 	int continuar=1;
+pid_t pid;
     
     struct sockaddr_in direccion;
     char buffer[1000];
@@ -56,6 +50,7 @@ while(continuar)
         printf("Aceptando conexiones en %s:%d \n",
                inet_ntoa(direccion.sin_addr),
                ntohs(direccion.sin_port));
+	
 	pid=fork();
 if(pid==0) continuar=0;
 
@@ -82,4 +77,5 @@ if (cliente>=0)
     close(cliente);
     
     return 0;
+}
 }

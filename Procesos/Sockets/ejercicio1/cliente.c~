@@ -1,3 +1,10 @@
+//
+//  cliente.c
+//  sockets
+//
+//  Created by Vicente Cubells Nonell on 14/09/15.
+//  Copyright (c) 2015 Vicente Cubells Nonell. All rights reserved.
+//
 
 /*Ejecutar ./archivo seguido del ip*/
 

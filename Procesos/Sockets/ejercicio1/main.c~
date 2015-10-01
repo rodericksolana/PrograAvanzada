@@ -1,3 +1,11 @@
+//
+//  main.c
+//  sockets
+//
+//  Created by Vicente Cubells Nonell on 14/09/15.
+//  Copyright (c) 2015 Vicente Cubells Nonell. All rights reserved.
+//
+
 
 #include <stdio.h>
 #include <sys/socket.h>
@@ -5,14 +13,12 @@
 #include <arpa/inet.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <time.h>
 
 #define TCP_PORT 8000
 
 int main(int argc, const char * argv[]) {
-
-srand((int) time(NULL));
-
+	int continuar=1;
+pid_t pid;
     
     struct sockaddr_in direccion;
     char buffer[1000];
@@ -41,28 +47,36 @@ srand((int) time(NULL));
     
     // Comunicación
     socklen_t tamano = sizeof(direccion);
+
+
+while(continuar)
+{
     
     cliente = accept(servidor, (struct sockaddr *) &direccion, &tamano);
-    
-int temp=0;
-    if (cliente >= 0) {
+ 
         printf("Aceptando conexiones en %s:%d \n",
                inet_ntoa(direccion.sin_addr),
                ntohs(direccion.sin_port));
-        
-        // Leer de socket y escribir en pantalla
+	
+	pid=fork();
+if(pid==0) continuar=0;
+
+}//Cierre de while
+
+if(pid==0)
+{
+	close (servidor);
+if (cliente>=0)
+{
+// Leer de socket y escribir en pantalla
         while (leidos = read(cliente, &buffer, sizeof(buffer))) {
-for(i=0; i<10;++i)
-	temp=rand() % 100;
-         
-           // write(fileno(stdout), &buffer, leidos);
-	write(fileno(stdout), &buffer, leidos);
+            write(fileno(stdout), &buffer, leidos);
             
             leidos = read(fileno(stdin), &buffer, sizeof(buffer));
             write(cliente, &buffer, leidos);
+       }
 
-        }     //Cierre de while
-    }
+}//Cierre if pid
     
     // Cerrar el socket
     
@@ -70,4 +84,5 @@ for(i=0; i<10;++i)
     close(cliente);
     
     return 0;
+}
 }

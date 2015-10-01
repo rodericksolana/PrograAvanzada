@@ -43,7 +43,7 @@ srand((int) time(NULL));
     socklen_t tamano = sizeof(direccion);
     
     cliente = accept(servidor, (struct sockaddr *) &direccion, &tamano);
-    
+    int i=0;
 int temp=0;
     if (cliente >= 0) {
         printf("Aceptando conexiones en %s:%d \n",
@@ -52,8 +52,9 @@ int temp=0;
         
         // Leer de socket y escribir en pantalla
         while (leidos = read(cliente, &buffer, sizeof(buffer))) {
-
+for(i=0; i<10;++i)
 	temp=rand() % 100;
+         
            // write(fileno(stdout), &buffer, leidos);
 	write(fileno(stdout), &buffer, leidos);
             
