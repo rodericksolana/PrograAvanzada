@@ -1,3 +1,10 @@
+/*Rodrigo Solana Chao
+ITESM CSF Ejercicio2 Server
+con  -1  se sale del programa.
+Programación Avanzada
+ Basado en tutorial
+http://www.cs.cf.ac.uk/Dave/C/node27.html 
+ */
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/shm.h>

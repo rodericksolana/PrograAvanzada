@@ -1,3 +1,7 @@
+/*Rodrigo Solana Chao
+ITESM CSF Ejercicio4 Cola2
+Programación Avanzada
+ */
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/msg.h>

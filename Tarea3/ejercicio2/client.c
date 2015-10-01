@@ -1,7 +1,6 @@
-/*
-Rodrigo Solana Chao
- Basado en tutorial
-http://www.cs.cf.ac.uk/Dave/C/node27.html 
+/*Rodrigo Solana Chao
+ITESM CSF Ejercicio2 Cliente
+Programación Avanzada
  */
 #include <sys/types.h>
 #include <sys/ipc.h>
