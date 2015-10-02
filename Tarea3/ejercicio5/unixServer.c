@@ -1,3 +1,7 @@
+/*Rodrigo Solana Chao
+ITESM CSF Ejercicio5 SocketsUnix.
+Servidor
+Programación Avanzada*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
