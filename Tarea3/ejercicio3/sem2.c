@@ -8,7 +8,6 @@ Programación Avanzada*/
  #include <sys/sem.h>
  #include <signal.h>
 
-	int valor(int);
 
 	int factorial(int a)
 	{
@@ -31,47 +30,25 @@ int main(int argc, const char * argv[])
 	//int a=0;
 
 	key =  1234;
-	nsems = 1;
+	nsems = 2;
 	semflg = IPC_CREAT | 0666;
 	/*semget() inicializa o nos da acceso a un semaforo*/
 	if ((semid = semget(key, nsems, semflg)) == -1) {
 			perror("semget: semget failed"); 
 			exit(1); } 
 	else 
-	printf("Se creo el semaforo\n");
-
-		pid_t pid;
-	 	//pid = fork();
-	 if ((pid = fork()) < 0) {
-		perror("fork");
-		exit(1);
-	    }
-
-printf("pid antes de entrar:  %d", pid);
+	printf("Semaforo correcto\n");
 
 
-	while(1)
+	while(semctl(semid, semnum, GETVAL, 0)!=-1)
 	{
-	if (pid == 0)
-	 { /* child */
-		/*semctl(int semid, int semnum, int cmd, union semun arg); //permite realizar operaciones en el semaforo o cambiar cosas*/
+
+		if(semctl(semid, semnum+1, GETVAL, 0)==0)
+{
 		printf("%d\n",factorial(semctl(semid, semnum, GETVAL, 0))); //me regresa el valor del semaforo
-		pid=1;
-	 }
-
-	else
-	{
-		int a=0;
-		a=valor(a);
-		semctl(semid, semnum, SETVAL, a); //asigna un valor nuevo al semaforo
-		pid=0;
-		if(a==-1)
-		{
-			semctl(semid, semnum, IPC_RMID, 0); //Elimino el semaforo
-			kill(pid, SIGKILL);
-		}
-	}//Cierre de padre
-
+		semctl(semid, semnum+1, SETVAL, 2);
+}
+		
 	}//Cierre de while
 	 	
 	printf("Sali del while\n");
@@ -80,9 +57,3 @@ printf("pid antes de entrar:  %d", pid);
 
 }//Cierre de main
 
-	int valor(int a)
-	{
-		printf("Dame un numero:  ");
-		scanf ("%d", &a);
-		return a;
-	}
