@@ -1,0 +1,34 @@
+Instrucciones Generales.
+
+Ejercicio1 Demonio:
+Se debe ejecutar seguido de un numero que es el tiempo en minutos a esperar para volverse a ejecutar
+creando un archivo en la carpeta de ejecucion llamado procesos.txt en donde se muestran todos los procesos activos.
+ejemplo:  ./demonioR 1  //cada minuto se ejecuta
+Instrucciones en terminal
+ps auxf |grep demonioR  //se muestra el proceso del demonio como sigue en ejecución
+para detener el proceso debemos poner   kill -9 ID
+
+
+Ejercicio2 Memoria Compartida:
+Se debe ejecutar primero el servidor sino va a marcar que no existe el archivo o directorio
+para salir ingresar  -1
+
+
+Ejercicio3 Semáforos:
+No importa el orden de ejecución... el sem 1 es el que manda el numero y el sem 2 muestra el factorial
+en caso de ejecutar sem 2 primero, espero a que sem 1 mande un numero.
+para salir ingresar  -1
+
+
+Ejercicio4 Colas de Mensajes:
+Se debe ejecutar primero la cola antes de la cola2, sino va a marcar error de que no existe la primera vez.
+para salir ingresar  -1
+Instrucciones en terminal
+ipcs -q  //esto me permite ver las colas
+ipcrm -q msqid  //me permite borrar la cola por el msqid
+
+
+Ejercicio5 Sockets Unix:
+Intercambio de mensajes entre cliente y servidor utilizando Sockets Unix
+Se debe ejecutar primero el servidor para poderse conectar el cliente, sino marca conexión rechazada
+No es necesario pasar ningún argumento para correrlo
