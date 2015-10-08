@@ -42,13 +42,14 @@ while(1)
 	for(;i>0;--i)
     {
         sleep(1);
-        printf("%d segundo durmiendo\n",i);
+        printf("%d segundo durmiendo Hijo\n",i);
     }
 printf("soy el hijo y Desperté!");
 s=1;
 
 
     kill(getpid(), SIGKILL); 
+printf("soy el hijo y Morí!");
      
     
         
@@ -56,12 +57,19 @@ s=1;
     else
     {
         //padre
+
+  if ( s==1 )//cambio el comportamiento para ignorar la señal
+        {
+        printf("Se presionó Ctrl C  %d  veces. y Ctrl Z  %d  veces.\n", c , z); 
+kill(getpid(), SIGKILL); 
+         }
+
 for(;j<=x;++j)
     {
         sleep(1);
-        printf("%d segundo durmiendo\n",i);
+        printf("%d segundo durmiendo Padre\n",j);
     }
-printf("Aparezco  %d  segundos", x);
+printf("Aparezco  %d  segundos \n", x);
 j=1;
    if ( signal (SIGINT, gestor_ctrlc) == SIG_ERR )//cambio el comportamiento para ignorar la señal
     {
@@ -74,10 +82,7 @@ j=1;
        printf("Error en el gestor de señales.\n");
         exit(-1); 
     }
-         if ( s==1 )//cambio el comportamiento para ignorar la señal
-        {
-        printf("Se presionó Ctrl C  %d  veces. y Ctrl Z  %d  veces.\n", c , z); 
-         }
+       
        
         
     }//Cierre padre
