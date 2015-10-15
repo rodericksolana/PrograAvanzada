@@ -7,11 +7,16 @@
 #include <string.h>
 #include <dirent.h>
 #include <errno.h>
+#define TIEMPO 3
 #define PATH "datos"
 #define N 50
+char * buffer[20];
+FILE *fp= NULL;
+int grabar =0;
 void gestor(int s)
 {
     printf("Se manda llamar la alarma, no está bloqueada.\n");
+grabar = 0;
 }
 
 void carpetaDir(void)
@@ -58,7 +63,7 @@ void borraContenido(void)
 int main(int argc, const char * argv[])
 {
 
-sigset_t mask;
+sigset_t mask, pendientes;
 sigfillset(&mask);
 sigdelset(&mask, SIGALRM);
 sigprocmask(SIG_SETMASK, &mask, NULL);
@@ -67,7 +72,32 @@ alarm(2);
 signal(SIGALRM, gestor);
 carpetaDir();
 
-while(1);
+int k = 0;
+    while (k < 5)
+    {
+        printf("Creando archivo... (Bloqueando senales)\n");
+        int sig;
+        grabar = 1;
+        sprintf(buffer, "./mydir/a%d", k);
+        k++;
+        fp = fopen(buffer, "w+");
+        //char unChar = 'x';
+        alarm(TIEMPO);
+        while(grabar){
+            fputc('x', fp);
+        }
+        sigpending(&pendientes);
+        for(sig=1; sig < NSIG; sig++)
+        {
+            if(sigismember(&pendientes, sig))
+                fprintf(fp, "\nEstaba bloqueada: la senal %d\n", sig);
+        }
+        fclose(fp);
+        
+    }
+    printf("Imprimiendo informacion ...\n\n");
+                       system("ls -lh datos");
+                       sigprocmask(SIG_UNBLOCK, &mask, NULL);
     
     return 0;
 
