@@ -22,7 +22,7 @@ grabar = 0;
 void carpetaDir(void)
 {
 int status;
-DIR* dir = opendir("mydir");
+DIR* dir = opendir(PATH);
 if (dir)
 {
     printf(" Directory exists. \n");
@@ -33,7 +33,7 @@ borraContenido();
 else if (ENOENT == errno)
 {
     printf(" Directory does not exist. \n");
-	mkdir("mydir", 0777);
+	mkdir(PATH, 0777);
 
 }
 else
@@ -49,10 +49,10 @@ void borraContenido(void)
  struct dirent *d;
         DIR *dir;
         char buf[256];
-        dir = opendir("mydir");
+        dir = opendir(PATH);
         while(d = readdir(dir))
         {               
-                sprintf(buf, "%s/%s", "mydir", d->d_name);
+                sprintf(buf, "%s/%s", PATH, d->d_name);
                 remove(buf);
         }
 
@@ -78,7 +78,7 @@ int k = 0;
         printf("Creando archivo... (Bloqueando senales)\n");
         int sig;
         grabar = 1;
-        sprintf(buffer, "./mydir/a%d", k);
+        sprintf(buffer, "./datos/a%d", k);
         k++;
         fp = fopen(buffer, "w+");
         //char unChar = 'x';
@@ -96,7 +96,7 @@ int k = 0;
         
     }
     printf("Imprimiendo informacion ...\n\n");
-                       system("ls -lh mydir");
+                       system("ls -lh datos");
                        sigprocmask(SIG_UNBLOCK, &mask, NULL);
     
     return 0;
