@@ -21,6 +21,7 @@ DIR* dir = opendir("mydir");
 if (dir)
 {
     printf(" Directory exists. \n");
+borraContenido();
    closedir(dir);
 
 }
@@ -57,8 +58,6 @@ void borraContenido(void)
 int main(int argc, const char * argv[])
 {
 
-borraContenido();
-
 sigset_t mask;
 sigfillset(&mask);
 sigdelset(&mask, SIGALRM);
@@ -67,7 +66,6 @@ signal(SIGALRM, SIG_DFL);
 alarm(2);
 signal(SIGALRM, gestor);
 carpetaDir();
-borraContenido();
 
 while(1);
     
