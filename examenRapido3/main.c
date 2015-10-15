@@ -96,7 +96,7 @@ int k = 0;
         
     }
     printf("Imprimiendo informacion ...\n\n");
-                       system("ls -lh datos");
+                       system("ls -lh mydir");
                        sigprocmask(SIG_UNBLOCK, &mask, NULL);
     
     return 0;
