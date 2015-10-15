@@ -46,29 +46,10 @@ void borraContenido(void)
         dir = opendir("mydir");
         while(d = readdir(dir))
         {               
-                printf(buf, "%s/%s", "mydir", d->d_name);
+                sprintf(buf, "%s/%s", "mydir", d->d_name);
                 remove(buf);
         }
 
-
-/*
-DIR* dp;
-struct dirent* ep;
-char* path = "mydir";
-
-dp = opendir(path);
-if (dp != NULL)
-{
-  printf("Dir content:\n");
-  while(ep = readdir(dp))
-  {
-    printf("%s\n", ep->d_name);
-   remove("prueba.txt");
-system("rm ep->d_name");
-  }
-}
-closedir(dp);
-*/
 
 }
 
