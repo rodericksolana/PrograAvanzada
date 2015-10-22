@@ -63,10 +63,13 @@ void *thread(void *p) {
 		    while (turn[j] != 0 && ((turn[j] < turn[id]) || (turn[j] == turn[id] && j < id))); 
 		}
 	        int temp = rand()%3;
+	       int temp2 = rand()%3;
 		if (materiales[temp] < 2)
 		{
 		    materiales[temp]++;
-                    printf("Agente coloco material tipo: %d\n",temp);
+		   materiales[temp2]++;
+
+                    printf("Agente coloco material tipo: %d  y  tipo: %d \n",temp, temp2);
 		}
 		if (materiales[papel] && materiales[tabaco] && materiales[fosforo])
 		    materialesB = 1;
