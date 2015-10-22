@@ -28,10 +28,11 @@ int main (int argc, const char * argv[]) {
         vars[i] = i;
     }
     
-    //ejecutar los threads...
+    //se crean los hilos...
     for (j=0; j<threads;j++) {
                pthread_create(&t, &attr, thread, &vars[j]);
     }
+
     pthread_exit(0);
 
 }//Cierre de main
@@ -61,12 +62,11 @@ void *thread(void *p) {
 		{
 		    while (turn[j] != 0 && ((turn[j] < turn[id]) || (turn[j] == turn[id] && j < id))); 
 		}
-//                printf("!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 	        int temp = rand()%3;
 		if (materiales[temp] < 2)
 		{
 		    materiales[temp]++;
-                    printf("se coloco material tipo: %d\n",temp);
+                    printf("Agente coloco material tipo: %d\n",temp);
 		}
 		if (materiales[papel] && materiales[tabaco] && materiales[fosforo])
 		    materialesB = 1;
@@ -94,8 +94,7 @@ void *thread(void *p) {
 	    for (j=0; j<threads; j++)
 		if (j != id) //Si no soy yo... 
 		{
-		    //while (flag[j]); //Esperando...
-		    while (turn[j] != 0 && ((turn[j] < turn[id]) || (turn[j] == turn[id] && j < id))); //Si le toca a mi "ticket" o tengo prioridad..
+		    while (turn[j] != 0 && ((turn[j] < turn[id]) || (turn[j] == turn[id] && j < id))); 
 		}
 
 	    if (materialesB)
