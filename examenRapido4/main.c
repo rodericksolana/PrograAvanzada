@@ -13,10 +13,11 @@ int pap=0;
 int tab=0;
 int fos=0;
 int materiales[3];
-int materialesB=0;
 void *thread(void *p);
 
 int threads=4;
+
+
 int main (int argc, const char * argv[]) {
     int i, j;
    
@@ -69,24 +70,24 @@ void *thread(void *p) {
 		if (materiales[temp] < 2)
 		{
 		if(temp==0)
-{
+	{
 		    materiales[tabaco]++;
 		    materiales[fosforo]++;
-printf("Agente coloco material tipo: tabaco  y  fosforo \n");
-}
-else if(temp==1)
-{
-		    materiales[papel]++;
-		    materiales[fosforo]++;
-printf("Agente coloco material tipo: papel y fosforo \n");
-}
+		printf("Agente coloco material tipo: tabaco  y  fosforo \n");
+		}
+		else if(temp==1)
+		{
+				    materiales[papel]++;
+				    materiales[fosforo]++;
+		printf("Agente coloco material tipo: papel y fosforo \n");
+		}
 
-else if(temp==2)
-{
-		    materiales[tabaco]++;
-		    materiales[papel]++;
-printf("Agente coloco material tipo: tabaco y papel \n");
-}
+		else if(temp==2)
+		{
+				    materiales[tabaco]++;
+				    materiales[papel]++;
+		printf("Agente coloco material tipo: tabaco y papel \n");
+		}
 
                     
 		}
@@ -132,7 +133,7 @@ printf("Agente coloco material tipo: tabaco y papel \n");
 		sleep(2);
 		pap = 0;
 	    }
- if (tab)
+	 if (tab)
 	    {
         	materiales[papel]--;
 		materiales[fosforo]--;
@@ -140,7 +141,7 @@ printf("Agente coloco material tipo: tabaco y papel \n");
 		sleep(2);
 		tab = 0;
 	    }
- if (fos)
+	 if (fos)
 	    {
         	materiales[papel]--;
 		materiales[tabaco]--;
