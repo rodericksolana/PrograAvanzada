@@ -9,6 +9,9 @@
 
 int flag[MAX_THREADS];
 int turn[MAX_THREADS];
+int pap=0;
+int tab=0;
+int fos=0;
 int materiales[3];
 int materialesB=0;
 void *thread(void *p);
@@ -63,16 +66,37 @@ void *thread(void *p) {
 		    while (turn[j] != 0 && ((turn[j] < turn[id]) || (turn[j] == turn[id] && j < id))); 
 		}
 	        int temp = rand()%3;
-	       int temp2 = rand()%3;
 		if (materiales[temp] < 2)
 		{
-		    materiales[temp]++;
-		   materiales[temp2]++;
+		if(temp==0)
+{
+		    materiales[tabaco]++;
+		    materiales[fosforo]++;
+printf("Agente coloco material tipo: tabaco  y  fosforo \n");
+}
+else if(temp==1)
+{
+		    materiales[papel]++;
+		    materiales[fosforo]++;
+printf("Agente coloco material tipo: papel y fosforo \n");
+}
 
-                    printf("Agente coloco material tipo: %d  y  tipo: %d \n",temp, temp2);
+else if(temp==2)
+{
+		    materiales[tabaco]++;
+		    materiales[papel]++;
+printf("Agente coloco material tipo: tabaco y papel \n");
+}
+
+                    
 		}
-		if (materiales[papel] && materiales[tabaco] && materiales[fosforo])
-		    materialesB = 1;
+		if (materiales[tabaco] && materiales[fosforo])
+		    pap = 1;
+		if (materiales[papel] && materiales[fosforo])
+		    tab = 1;
+		if (materiales[papel] && materiales[tabaco])
+		    fos = 1;
+
 		turn[id] = 0;
         }
     }
@@ -100,14 +124,29 @@ void *thread(void *p) {
 		    while (turn[j] != 0 && ((turn[j] < turn[id]) || (turn[j] == turn[id] && j < id))); 
 		}
 
-	    if (materialesB)
+	    if (pap)
+	    {
+		materiales[tabaco]--;
+		materiales[fosforo]--;
+		printf("fumador 1 esta fumando, tengo papel\n");
+		sleep(2);
+		pap = 0;
+	    }
+ if (tab)
+	    {
+        	materiales[papel]--;
+		materiales[fosforo]--;
+		printf("fumador 2 esta fumando, tengo tabaco\n");
+		sleep(2);
+		tab = 0;
+	    }
+ if (fos)
 	    {
         	materiales[papel]--;
 		materiales[tabaco]--;
-		materiales[fosforo]--;
-		printf("fumador %d esta fumando\n", id);
+		printf("fumador 3 esta fumando, tengo fosforo\n");
 		sleep(2);
-		materialesB = 0;
+		fos = 0;
 	    }
 	    
 	    turn[id] = 0;
