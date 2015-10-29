@@ -56,6 +56,7 @@ while(1)
     int cine;
     int sala;
     int asiento;
+int val=0;
 pthread_mutex_lock(&lock);
 while (condition == 0)
     pthread_cond_wait(&cond, &lock);
@@ -72,9 +73,14 @@ switch ((int)arg)
 cine = rand()%cines;
 sala=rand()%salas;
 asiento=rand()%asientos;
-
+val=cine*sala*asiento;
+if(sillas[val]==0)
+{
 printf("proceso %d  Comprando el asiento %d, en la sala %d, en el cine %d\n", (int)arg, asiento, sala, cine);
-                    sleep (rand()%3);
+sillas[val]=1;
+}
+else printf("El asiento esta ocupado\n"); 
+                   sleep (rand()%3);
                     
                 }
                 break;
@@ -85,8 +91,13 @@ comprando=0;
 cine = rand()%cines;
 sala=rand()%salas;
 asiento=rand()%asientos;
-
-printf("proceso %d  Comprando el asiento %d, en la sala %d, en el cine%d\n", (int)arg, asiento, sala, cine);
+val=cine*sala*asiento;
+if(sillas[val]==0)
+{
+printf("proceso %d  Comprando el asiento %d, en la sala %d, en el cine %d\n", (int)arg, asiento, sala, cine);
+sillas[val]=1;
+}
+else printf("El asiento esta ocupado\n"); 
                     sleep (rand()%3);
                 }
                 break;
@@ -97,8 +108,13 @@ printf("proceso %d  Comprando el asiento %d, en la sala %d, en el cine%d\n", (in
 cine = rand()%cines;
 sala=rand()%salas;
 asiento=rand()%asientos;
-
+val=cine*sala*asiento;
+if(sillas[val]==0)
+{
 printf("proceso %d  Comprando el asiento %d, en la sala %d, en el cine %d\n", (int)arg, asiento, sala, cine);
+sillas[val]=1;
+}
+else printf("El asiento esta ocupado\n"); 
                     sleep (rand()%3);
                 }
                     
@@ -124,7 +140,13 @@ sleep(2);
 
 int main(void)
 {
-
+int i=0;
+int tot=0;
+tot=cines * salas * asientos;
+for(i=0;i<tot;++i)
+{
+sillas[i]=0;
+}
 
 pthread_t * tid = (pthread_t *) malloc (sizeof(pthread_t) * 5);
 
