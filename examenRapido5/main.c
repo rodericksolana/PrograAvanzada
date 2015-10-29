@@ -33,7 +33,7 @@ pthread_mutex_lock(&lock);
 condition = 1;
 //printf("Agente con id %d\n",(int)arg);
 printf("acaba de llegar un cliente\n");
- aux = rand() % 3;
+ aux = rand() % 4;
 printf("acaba de llegar un cliente  aux  %d\n", aux);
 pthread_cond_signal(&cond);
 pthread_mutex_unlock(&lock);
@@ -68,7 +68,7 @@ switch ((int)arg)
                 break;
             case 1:
                 if (aux==2){
-                      printf("Voy a comprar boletos\n", (int)arg);
+                      printf("Voy a comprar boletos soy el proceso %d\n", (int)arg);
 
 
                     sleep (rand()%3);
@@ -76,7 +76,7 @@ switch ((int)arg)
                 break;
             case 2:
                 if (aux==3){
-                      printf("Voy a comprar boletos\n", (int)arg);
+                      printf("Voy a comprar boletos soy el proceso %d\n", (int)arg);
                     
 
                     sleep (rand()%3);
