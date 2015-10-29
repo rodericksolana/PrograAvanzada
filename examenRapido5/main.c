@@ -16,6 +16,7 @@ pthread_cond_t cond=PTHREAD_COND_INITIALIZER;
 int condition=0;
 int aux=0;
 int sigue=0;
+int comprando=0;
 
 int temp=0;
 pthread_mutex_t lock;
@@ -32,9 +33,13 @@ pthread_mutex_lock(&lock2);
 pthread_mutex_lock(&lock);
 condition = 1;
 //printf("Agente con id %d\n",(int)arg);
-printf("acaba de llegar un cliente\n");
- aux = rand() % 4;
+if(comprando==0)
+{
+ aux = rand() % 3;
 printf("acaba de llegar un cliente  aux  %d\n", aux);
+comprando=1;
+}
+
 pthread_cond_signal(&cond);
 pthread_mutex_unlock(&lock);
 sigue=1;
@@ -58,26 +63,25 @@ switch ((int)arg)
         {
            
             case 0: 
-                if (aux==1){
+                if (aux==0){
                     printf("Voy a comprar boletos soy el proceso %d\n", (int)arg);
-                    
-
+                    comprando=0;
                     sleep (rand()%3);
                     
                 }
                 break;
             case 1:
-                if (aux==2){
+                if (aux==1){
                       printf("Voy a comprar boletos soy el proceso %d\n", (int)arg);
-
+comprando=0;
 
                     sleep (rand()%3);
                 }
                 break;
             case 2:
-                if (aux==3){
+                if (aux==2){
                       printf("Voy a comprar boletos soy el proceso %d\n", (int)arg);
-                    
+                    comprando=0;
 
                     sleep (rand()%3);
                 }
@@ -93,6 +97,7 @@ Aqui va el codigo
 
 pthread_mutex_unlock(&lock);
 pthread_mutex_unlock(&lock2);
+
 sigue=0; //avido al agente que despierte
 sleep(2);
 
