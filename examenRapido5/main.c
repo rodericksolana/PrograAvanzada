@@ -5,9 +5,8 @@
 #include<unistd.h>
 #define cines 3
 #define salas 4
-#define asiento 2
-int cine [cines][salas];
-//int asientos[][];
+#define asientos 2
+int sillas [cines * salas * asientos]; //numero total de sillas en todos los cines
 
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t lock2 = PTHREAD_MUTEX_INITIALIZER;
@@ -54,6 +53,9 @@ void* compra(void * arg)
 
 while(1)
 {
+    int cine;
+    int sala;
+    int asiento;
 pthread_mutex_lock(&lock);
 while (condition == 0)
     pthread_cond_wait(&cond, &lock);
@@ -65,7 +67,13 @@ switch ((int)arg)
             case 0: 
                 if (aux==0){
                     printf("Voy a comprar boletos soy el proceso %d\n", (int)arg);
+
                     comprando=0;
+cine = rand()%cines;
+sala=rand()%salas;
+asiento=rand()%asientos;
+
+printf("proceso %d  Comprando el asiento %d, en la sala %d, en el cine %d\n", (int)arg, asiento, sala, cine);
                     sleep (rand()%3);
                     
                 }
@@ -74,7 +82,11 @@ switch ((int)arg)
                 if (aux==1){
                       printf("Voy a comprar boletos soy el proceso %d\n", (int)arg);
 comprando=0;
+cine = rand()%cines;
+sala=rand()%salas;
+asiento=rand()%asientos;
 
+printf("proceso %d  Comprando el asiento %d, en la sala %d, en el cine%d\n", (int)arg, asiento, sala, cine);
                     sleep (rand()%3);
                 }
                 break;
@@ -82,7 +94,11 @@ comprando=0;
                 if (aux==2){
                       printf("Voy a comprar boletos soy el proceso %d\n", (int)arg);
                     comprando=0;
+cine = rand()%cines;
+sala=rand()%salas;
+asiento=rand()%asientos;
 
+printf("proceso %d  Comprando el asiento %d, en la sala %d, en el cine %d\n", (int)arg, asiento, sala, cine);
                     sleep (rand()%3);
                 }
                     
@@ -108,25 +124,6 @@ sleep(2);
 
 int main(void)
 {
-int i=0;
-int j=0;
-for(i=0;i<cines;++i)
-{
- for(j=0; j<salas;++j)
-{
-cine[i][j]=0;
-}
-}//Creando cine
-
-for(i=0;i<cines;++i)
-{
- for(j=0; j<salas;++j)
-{
-printf("%d -", cine[i][j]);
-}
-printf("\n");
-}//Creando cine
-
 
 
 pthread_t * tid = (pthread_t *) malloc (sizeof(pthread_t) * 5);
