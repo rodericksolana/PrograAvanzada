@@ -6,21 +6,17 @@
 #include <signal.h>
 
 #define UAD 5 //Secciones
-
-int medida[UAD];
-int criticos[UAD];
 FILE * datos;
+int medidas[UAD];
+int alarmas[UAD];
 int i=0;
 
+pthread_t central;
 pthread_mutex_t mutexes[UAD * 2] = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t m_archivo = PTHREAD_MUTEX_INITIALIZER;
 
-pthread_t central;
-
-
 void registro(int);
 void registroCritico(int);
-void cerrar_archivo(int);
 
 void * threadfunc(void * arg)
 {
@@ -31,7 +27,7 @@ void * threadfunc(void * arg)
         sleep(rand()%3 + 1);
         pthread_mutex_lock(&(*(mutexes + (int) arg)));
 
-        medida[(int) arg] = rand()%10;
+        medidas[(int) arg] = rand()%10;
         pthread_mutex_unlock(&(*(mutexes + (int) arg)));
         if(!(temp =rand()%10))
         {
@@ -39,7 +35,7 @@ void * threadfunc(void * arg)
             
             pthread_mutex_lock(mutexes + (int) arg + UAD);
             
-            criticos[(int) arg]++;
+            alarmas[(int) arg]++;
             pthread_kill(central, SIGUSR1);
          
             pthread_mutex_unlock(mutexes + (int) arg + UAD);
@@ -70,7 +66,7 @@ void registro(int ids)
         pthread_mutex_lock(&m_archivo);
         
         datos = fopen("datos", "a+");
-        fprintf(datos,"UAD #%d medicion total=>%d\n",i, medida[i]);
+        fprintf(datos,"UAD #%d medicion total=>%d\n",i, medidas[i]);
         fclose(datos);
         pthread_mutex_unlock(&m_archivo);
         pthread_mutex_unlock(mutexes+i);
@@ -85,14 +81,14 @@ void registroCritico(int ids)
     {
         pthread_mutex_lock(mutexes+UAD+i);
 
-        if (criticos[i])
+        if (alarmas[i])
         {
             pthread_mutex_lock(&m_archivo); 
             datos = fopen("datos", "a+");
             fprintf(datos,"UAD #%d  - Alerta! VALOR-CRITICO\n",i);
             fclose(datos);
             pthread_mutex_unlock(&m_archivo);
-            criticos[i]--;
+            alarmas[i]--;
         }
         
         pthread_mutex_unlock(mutexes+UAD+i);
