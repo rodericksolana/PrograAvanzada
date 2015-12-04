@@ -139,10 +139,11 @@ while(true){
     for( i = 1; i < numprocs; i++)
 	{
 	 MPI_Recv(&r1,1,MPI_INT,i,0,MPI_COMM_WORLD,MPI_STATUS_IGNORE);
-	printf("en la terminal %d hay %d personas en las bandas\n", i, r1);
-	total+=r1;
+	/*printf("en la terminal %d hay %d personas en las bandas\n", i, r1);
+	total+=r1;*/
+
 	}
-	printf("En todas las terminales hay %d personas en las bandas\n", total);
+	//printf("En todas las terminales hay %d personas en las bandas\n", total);
     //MPI_Recv(&r1,1,MPI_INT,1,0,MPI_COMM_WORLD,MPI_STATUS_IGNORE);
     //MPI_Recv(&r2,1,MPI_INT,2,0,MPI_COMM_WORLD,MPI_STATUS_IGNORE);
     }//Cierre de while
