@@ -56,9 +56,11 @@ if((i%17)==0)
 else
 *p= 0; //0 son las casillas por las que se puede mover el robot
 
+        }//Cierre de for
+printf("Se genero el tablero con memoria dinamica\n");
+
 master(numprocs, p);
-        }
-}
+}//Cierre de master
 
 else
 {
@@ -68,14 +70,10 @@ printf("Hostname:%s\n", hostname);
             int id = omp_get_thread_num();
 	       robot(numprocs, p);
             
-        }
-    }//Cierre de else
-
+        }//Cierre de parallel
+    }//Cierre de else 
+        //start = MPI_Wtime();
         
-        start = MPI_Wtime();
-        
-        
-    }//cierre del master
 
     /* Broadcast a todos los procesos */
     MPI_Bcast(data, n, MPI_INT, 0, MPI_COMM_WORLD);
