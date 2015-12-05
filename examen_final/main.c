@@ -10,7 +10,7 @@
 #include <sys/mman.h>
 #include <stdbool.h>
 
-#define MAXSIZE 10
+#define MAXSIZE 1000
 
 void master(int , int *);
 void robot(int , int *);
@@ -58,7 +58,9 @@ int main(int argc, char *argv[])
 			}//Cierre de for
 		printf("Se genero el tablero con memoria dinamica\n");
 		i=0;
-			for(p=data; p< (data + (n*n)); p++) {
+			
+		/*Se pinta el tablero*/
+		for(p=data; p< (data + (n*n)); p++) {
 		if(i==n)
 		{
 		printf("\n");
@@ -177,7 +179,7 @@ printf("Hola soy el proceso PRINCIPAL: Recibí  %d del proceso %d\n", r1, i);
 
 void robot(int numprocs, int *p)
 {
-int cont=10;
+int cont=MAXSIZE;
 MPI_Send(&cont,1,MPI_INT,0,0,MPI_COMM_WORLD);
 
 
