@@ -38,7 +38,6 @@ int main(int argc, char *argv[])
     MPI_Init(&argc,&argv);
     MPI_Comm_size(MPI_COMM_WORLD,&numprocs);
     MPI_Comm_rank(MPI_COMM_WORLD,&myid);
-    
     MPI_Get_processor_name(hostname, &longitud);
     
     
@@ -68,7 +67,7 @@ int main(int argc, char *argv[])
 		i++;
 			}//Cierre de for
 
-
+		printf("\n");
 		//master(numprocs, p);
 		}//Cierre de master
 
@@ -78,6 +77,9 @@ int main(int argc, char *argv[])
     
     /* Porción de data  que va a procesar cada procesador*/
     x = (n*n)/numprocs;
+
+            printf("\t --- Procesador %d (%s) voy a procesar %d casillas\n", myid, hostname, x);
+//printf("Voy a procesar: %d  casillas", x);
     low = myid * x;
     high = low + x;
     if (myid == numprocs - 1) { high = (n*n); }
@@ -90,20 +92,34 @@ int main(int argc, char *argv[])
 #pragma omp for reduction(+:myresult)
         for(i = low; i < high; i++) {
             myresult += *(data+i);
-            printf("\t --- Procesador %d (%s) con %d hilos. Soy el hilo %d y calculo la iteración %d\n", myid, hostname, nh, tid, i);
-        }
-    }
+            //printf("\t --- Procesador %d (%s) con %d hilos. Soy el hilo %d y calculo la iteración %d\n", myid, hostname, nh, tid, i);
+        }//Cierre de for
+    }//Cierre de omp parallel
+
+
     
-    printf(" *** Yo soy el procesador %d (%s)  y mi suma = %d\n", myid , hostname, myresult);
+    //printf(" *** Yo soy el procesador %d (%s)  y mi suma = %d\n", myid , hostname, myresult);
     
-    MPI_Reduce(&myresult, &result, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
+
+	MPI_Reduce(&myresult, &result, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
     
     /* Suma global mediante reducción */
     if (myid == 0)
     {
-        printf("La suma total del vector es = %d.\n", result);
+        printf("\nEl total de obstaculos es = %d.\n", result);
+	master(numprocs, p);
         
     }
+
+else 
+{
+
+printf(" *** Yo soy el procesador %d (%s) y hay %d procesos \n", myid , hostname, numprocs);
+robot(numprocs, p);
+
+
+}
+
     
     MPI_Finalize();
 
@@ -118,7 +134,6 @@ free(data);
 void master(int numprocs, int *p)
 {
     printf("Hola soy el master\n");  
-	//printf("%d\n", MPI_MAX_PROCESSOR_NAME);
     int r1;
 int i;
 int total = 0;
@@ -126,7 +141,9 @@ while(true){
 	total=0;
     for( i = 1; i < numprocs; i++)
 	{
+//printf("Entre al for\n");
 	 MPI_Recv(&r1,1,MPI_INT,i,0,MPI_COMM_WORLD,MPI_STATUS_IGNORE);
+printf("Recibí  %d del proceso %d\n", r1, i);
 	/*printf("en la terminal %d hay %d personas en las bandas\n", i, r1);
 	total+=r1;*/
 
@@ -142,12 +159,15 @@ while(true){
 
 void robot(int numprocs, int *p)
 {
+int cont=10;
+MPI_Send(&cont,1,MPI_INT,0,0,MPI_COMM_WORLD);
 
 
   
  //MPI_Recv(&r1,1,MPI_INT,i,0,MPI_COMM_WORLD,MPI_STATUS_IGNORE);
 
 }//Cierre de funcion
+
 
 
 
