@@ -10,7 +10,7 @@
 #include <sys/mman.h>
 #include <stdbool.h>
 
-#define MAXSIZE 1000
+#define MAXSIZE 10
 
 void master(int , int *);
 void robot(int , int *);
