@@ -84,7 +84,7 @@ int k = 0;
         //char unChar = 'x';
         alarm(TIEMPO);
         while(grabar){
-            fputc('x', fp);
+           // fputc('x', fp);  //Aqui va lo que se quiere imprimir adentro de cada archivo
         }
         sigpending(&pendientes);
         for(sig=1; sig < NSIG; sig++)
